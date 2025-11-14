@@ -21,18 +21,59 @@ function init() {
 }
 
 function addTodo() {
-  console.log("yay");
+  // - get localstorage getten
+  const todoString = localStorage.getItem("todos");
+
+  // - parse
+  const todos = JSON.parse(todoString);
+
+  // get input
+  const todoInput = document.getElementById("todoInput");
+
+  // - {new} -> add -> {existing}
+  const newTodo = {
+    id: Date.now(),
+    text: todoInput.value,
+  };
+  todos.push(newTodo);
+
+  // - string
+  const newString = JSON.stringify(todos);
+
+  // - set localstorage
+  localStorage.setItem("todos", newString);
+
+  // - refresh the data
+  displayTodos();
+
+  // clear input
+  todoInput.value = "";
+}
+
+// Function to delete todo's
+function deleteTodo(idT) {
+  // - get localstorage
+  const todoString = localStorage.getItem("todos");
+  const todos = JSON.parse(todoString);
+
+  // - filter all items except {deleted} in new {obj}
+  const newTodos = todos.filter(todo => todo.id !== idT);
+
+  // - set localstorage
+  localStorage.setItem("todos", JSON.stringify(newTodos));
+
+  // - refresh the data
+  displayTodos();
 }
 
 // Iterate the todo's in the dom structure
 function displayTodos() {
-  console.log("displaying todo");
   // identify the placeholder as an element
   const todoList = document.getElementById("todoList");
 
   // get todo's from the localstorage
   const todos = getTodosFromStorage();
-  console.log(todos);
+
   // clear the current list
   todoList.innerHTML = "";
 
@@ -40,7 +81,21 @@ function displayTodos() {
     // show empty message
     todoList.innerHTML =
       '<li class="list-group-item">No notes yet... write some</li>';
+    return;
   }
+
+  // generate items
+  todos.forEach(todo => {
+    const li = document.createElement("li");
+    li.classList.add("list-group-item", "d-flex", "justify-content-between");
+
+    li.innerHTML = `
+      ${todo.text}
+      <button class="btn btn-danger btn-sm" onclick="deleteTodo(${todo.id})">Delete</button>
+    `;
+
+    todoList.appendChild(li);
+  });
 }
 
 function getTodosFromStorage() {
@@ -56,18 +111,5 @@ function getTodosFromStorage() {
   return JSON.parse(todosString);
 }
 
-// Function to add todo's
-// - get localstorage getten
-// - parse
-// - {new} -> add -> {existing}
-// - string
-// - set localstorage
-// - refresh the data
-// Function to delete todo's
-// - get localstorage
-// - filter all items except {deleted} in new {obj}
-// - set localstorage
-// - refresh the data
-// Chilax and enjoy the weekend 😇
-
 init();
+
