@@ -112,4 +112,26 @@ function addTodo() {
 // - refresh the data
 // Chilax and enjoy the weekend 😇
 
+/**
+ * Delete a todo item by its ID
+ * @param {number} id - The unique ID of the todo to delete
+ * @return {void}
+ */
+function deleteTodo(id) {
+    // Get existing todos from localStorage
+    const todos = getTodosFromStorage();
+    
+    // Filter out the todo with the matching ID
+    // This creates a new array without the deleted todo
+    const updatedTodos = todos.filter(function(todo) {
+        return todo.id !== id;
+    });
+    
+    // Save the updated array back to localStorage
+    saveTodosToStorage(updatedTodos);
+    
+    // Refresh the display to show remaining todos
+    displayTodos();
+}
+
 init();
