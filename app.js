@@ -12,7 +12,10 @@ function init() {
   // setup my event listeners
   addBtn.addEventListener("click", addTodo);
   const clearBtn = document.getElementById("clearBtn");
-  clearBtn.addEventListener("click", clearTodos);
+  clearBtn.addEventListener("click", function () {
+    localStorage.removeItem("todos");
+    displayTodos();
+  });
 
   function clearTodos() {
     localStorage.removeItem("todos");
@@ -44,10 +47,6 @@ function addTodo() {
   };
   todos.push(newTodo);
 
-
-  // save updated tdos
-  saveTodosToStorage(todos);
-
   // - string
   const newString = JSON.stringify(todos);
 
@@ -60,6 +59,7 @@ function addTodo() {
   // clear input
   todoInput.value = "";
 }
+
 
 // Function to delete todo's
 function deleteTodo(idT) {
