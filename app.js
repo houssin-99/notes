@@ -115,5 +115,19 @@ function getTodosFromStorage() {
   return JSON.parse(todosString);
 }
 
+// Function to add todo's
+// - get localstorage getten
+// - parse
+// - {new} -> add -> {existing}
+// - string
+// - set localstorage
+// - refresh the data
+// Function to delete todo's
+// - get localstorage
+// - filter all items except {deleted} in new {obj}
+// - set localstorage
+// - refresh the data
+// Chilax and enjoy the weekend 😇
+
 init();
 
