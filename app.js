@@ -37,6 +37,10 @@ function addTodo() {
   };
   todos.push(newTodo);
 
+
+  // save updated tdos
+  saveTodosToStorage(todos);
+
   // - string
   const newString = JSON.stringify(todos);
 
