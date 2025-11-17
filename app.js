@@ -11,6 +11,13 @@ function init() {
 
   // setup my event listeners
   addBtn.addEventListener("click", addTodo);
+  const clearBtn = document.getElementById("clearBtn");
+  clearBtn.addEventListener("click", clearTodos);
+
+  function clearTodos() {
+    localStorage.removeItem("todos");
+    displayTodos();
+  }
 
   todoInput.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
